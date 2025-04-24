@@ -26,7 +26,9 @@ The model uses an encoder-controller architecture to process the audio signals a
 
 Most audio effects are Infinite Impulse Response (IIR) filters, which can be expressed as:
 
-$$y[n] = \sum_{i=0}^{P} b_{i} x[n-i] + \sum_{i=1}^{Q} a_{i} y[n-i]$$
+```math
+y[n] = \sum_{i=0}^{P} b_{i} x[n-i] + \sum_{i=1}^{Q} a_{i} y[n-i]
+```
 
 To make these effects differentiable, especially for backpropagation, we approximate IIR filters using the frequency-sampling method to convert them into Finite Impulse Response (FIR) filters.
 
@@ -38,15 +40,21 @@ To make these effects differentiable, especially for backpropagation, we approxi
 
 The training loss combines time-domain and frequency-domain components, including a multi-resolution STFT loss:
 
-$$\mathcal{L}_{M R-S T F T}(\hat{x}, x)=\frac{1}{M} \sum_{m=1}^{M}\left(\mathcal{L}_{S C}(\hat{x}, x)+\mathcal{L}_{S M}(\hat{x}, x)\right)$$
+```math
+\mathcal{L}_{M R-S T F T}(\hat{x}, x)=\frac{1}{M} \sum_{m=1}^{M}\left(\mathcal{L}_{S C}(\hat{x}, x)+\mathcal{L}_{S M}(\hat{x}, x)\right)
+```
 
 where
 
-$$\mathcal{L}_{S C}(\hat{x}, x)=\frac{\| \| S T F T(x) \|-\| S T F T(\hat{x}) \| \|_{F}}{\| \| S T F T(x) \| \|_{F}}$$
+```math
+\mathcal{L}_{S C}(\hat{x}, x)=\frac{\| \| S T F T(x) \|-\| S T F T(\hat{x}) \| \|_{F}}{\| \| S T F T(x) \| \|_{F}}
+```
 
 and
 
-$$\mathcal{L}_{S M}(\hat{x}, x)=\frac{1}{N}\| \log (| S T F T(x) |)-\log (| S T F T(\hat{x}) |) \|_{1}$$
+```math
+\mathcal{L}_{S M}(\hat{x}, x)=\frac{1}{N}\| \log (| S T F T(x) |)-\log (| S T F T(\hat{x}) |) \|_{1}
+```
 
 ## Results
 
